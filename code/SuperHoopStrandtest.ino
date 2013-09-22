@@ -59,6 +59,8 @@ void dopattern()
 unsigned long replaceColor(byte color)//extend 2 bits to 24 and shift bits for brighter shades
 
 {
+//Basically just extrapolating an 8 bit value (xxRRGGBB) to a 24 bit value (xxxxRRRR.GGGGBBBB) 
+//to save storage used for the array
   byte redcolor=((color & 0x02)<<6)|((color&0x01)<<5);
   byte grncolor=((color & 0x08)<<4)|((color&0x04)<<3);
   byte blucolor=((color & 0x30)<<2)|((color&0x04)<<1);//<<1;
