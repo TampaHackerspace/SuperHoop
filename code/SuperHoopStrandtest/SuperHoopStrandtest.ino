@@ -78,10 +78,47 @@ void render_frame(int frame)
 unsigned long replaceColor(byte color)//extend 2 bits to 24 and shift bits for brighter shades
 
 {
-  byte redcolor=((color & 0x02)<<6)|((color&0x01)<<5);
-  byte grncolor=((color & 0x08)<<4)|((color&0x04)<<3);
-  byte blucolor=((color & 0x30)<<2)|((color&0x04)<<1);//<<1;
-  return strip.Color(redcolor,  grncolor,  blucolor);
+switch (color&0x03)//red{//mask off the 2 relevant bits and expand to 8 bits
+  case 0x01:
+    redcolor=0x0F;
+    break;
+  case 0x02:
+    redcolor=0xF0;
+    break;
+  case 0x03:
+    redcolor=0xFF;
+    break;
+  default:redcolor=0x00;
+  }
+switch (color&0x0C)//grn{
+  case 0x04:
+    grncolor=0x0F;
+    break;
+  case 0x08:
+    grncolor=0xF0;
+    break;
+  case 0x0C:
+    grncolor=0xFF;
+    break;
+  default:grncolor=0x00;
+  }
+switch (color&0x30)//blu{
+  case 0x10:
+    blucolor=0x0F;
+    break;
+  case 0x20:
+    blucolor=0xF0;
+    break;
+  case 0x30:
+    blucolor=0xFF;
+    break;
+  default:blucolor=0x00;
+  }
+  
+  //byte redcolor=((color & 0x02)<<6)|((color&0x01)<<5);
+  //byte grncolor=((color & 0x08)<<4)|((color&0x04)<<3);
+  //byte blucolor=((color & 0x30)<<2)|((color&0x04)<<1);//<<1;
+  return strip.Color(redcolor,  grncolor,  blucolor);//combine individual 8 bit RGB values to a long
 
 }
 // Fill the dots one after the other with a color
