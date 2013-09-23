@@ -13,10 +13,10 @@ public static void main(String[] args) throws Exception{
   }
   String path = args[0];
   BufferedImage image = ImageIO.read(new File(path));
-  String data[] = new String[18];
-  for (int x = 0; x < 18 ; x++ ) {
-    Integer row[] = new Integer[18];
-    for (int y = 0; y < 18 ; y++ ) {
+  String data[] = new String[image.getWidth()];
+  for (int x = 0; x < image.getWidth() ; x++ ) {
+    Integer row[] = new Integer[image.getHeight()];
+    for (int y = 0; y < image.getHeight() ; y++ ) {
       int pixel[] = new int[3];
       int color = image.getRGB(x,y);
       pixel[0] = ((color >>16) &0xff)>>6;
@@ -33,6 +33,8 @@ public static void main(String[] args) throws Exception{
     }
     data[x] = "{"+join(row,", ")+"}";
   }
+  System.out.println("#define PATTERN_SIZE "+ image.getHeight());
+  System.out.println("#define PATTERN_REPEAT " + image.getWidth());
   System.out.println("{"+join(data, ", \n")+"};");
 }
 
