@@ -7,12 +7,15 @@ import javax.swing.*;
 import java.util.Collection;
 class bitmap2hoop {
 public static void main(String[] args) throws Exception{
-  if(args.length < 1){
-    System.out.println("Please provide path to bitmap");
-    System.exit(1);
-  }
-  String path = args[0];
-  BufferedImage image = ImageIO.read(new File(path));
+  System.out.println("#define NUMBER_OF_PATTERNS " + args.length);
+  for (String s : args ) {
+      outputImage(s);
+    }  
+}
+
+public static void outputImage(String path) throws Exception{
+  File imageFile = new File(path);
+  BufferedImage image = ImageIO.read(imageFile);
   String data[] = new String[image.getWidth()];
   for (int x = 0; x < image.getWidth() ; x++ ) {
     Integer row[] = new Integer[image.getHeight()];
@@ -33,22 +36,27 @@ public static void main(String[] args) throws Exception{
     }
     data[x] = "{"+join(row,", ")+"}";
   }
-  System.out.println("#define PATTERN_SIZE "+ image.getHeight());
-  System.out.println("#define PATTERN_REPEAT " + image.getWidth());
-  System.out.println("{"+join(data, ", \n")+"};");
+  System.out.print("int " + imageFile.getName().replace(".", "_"));
+  System.out.print("["+ image.getHeight()+"]");
+  System.out.println("[" + image.getWidth()+"] = {");
+  System.out.println(join(data, ", \n")+"\n};");
 }
 
 public static String join(Object[] pixels, String delimiter) {
     StringBuffer buffer = new StringBuffer();
     {
       for (int i = 0;i < pixels.length ; i++ ) {
-        buffer.append(pixels[i]);
+        buffer.append(padLeft(pixels[i],2));
         if (i < pixels.length - 1) {
           buffer.append(delimiter);
         }
       }
     }
     return buffer.toString();
+}
+
+public static String padLeft(Object s, int n) {
+    return String.format("%1$" + n + "s", s.toString());  
 }
 
 }
