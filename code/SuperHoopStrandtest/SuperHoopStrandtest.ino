@@ -5,8 +5,8 @@
 //long currentmillis
 #define PIN 6//digital out to neopixel strip
 #define PIXELS 90
-#define PATTERN_SIZE 18
-#define DELAY 1500
+//#define PATTERN_SIZE 18
+#define DELAY 15
 #define SELECT_BUTTON
 //r=0x1,0x2, g=0x4,0x8, b=0x10,0x20
 #define PATTERN_SIZE 18
@@ -194,7 +194,7 @@ int pattern9[PATTERN_SIZE][PATTERN_REPEAT] =
 
 #define NUM_PATTERNS 9
 
-int* patterns[NUM_PATTERNS+1] = {
+/*int* patterns[NUM_PATTERNS+1] = {
   *pattern1,
   *pattern2,
   *pattern3,
@@ -204,16 +204,18 @@ int* patterns[NUM_PATTERNS+1] = {
   *pattern7,
   *pattern8,
   *pattern9
-};
+};*/
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(90, PIN, NEO_GRB + NEO_KHZ800);
 int frame = 0;
 int currentPattern = 0;
 int counter=0;
 void setup() {
+  digitalWrite(13,LOW);
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
   Serial.begin(9600);
+  Serial.println("Setup TEST\r\n");
 }
 
 
@@ -222,12 +224,12 @@ void loop() {
   // Some example procedures showing how to display to the pixels:
   //currentmillis=millis();
   render_frame(frame);
-  //Serial.println("LOOP TEST\r\n");
+  Serial.println("LOOP TEST\r\n");
   frame++;
   frame = frame%PATTERN_REPEAT;
   delay(DELAY);
   counter++;
-  if(counter>10000)
+  if(counter>1000)
   {
     counter=0;
     currentPattern++;
@@ -238,15 +240,43 @@ void loop() {
 
 void render_frame(int frame)
 {
-  Serial.println("BLA");
+  //Serial.println("BLA");
   for(int i=0;i<18;i++)
   {
-    Serial.println(i);
+    //Serial.println(i);
     for(int offset=0; offset < PIXELS; offset+=PATTERN_SIZE){
-      int* myPattern = patterns[currentPattern];
-      Serial.print("pattern: ");
-      Serial.println(myPattern[frame]);
-//      strip.setPixelColor(i+offset,replaceColor(patterns[currentPattern][frame][i]));
+      //nt* myPattern = patterns[currentPattern];
+      //Serial.print("pattern: ");
+      //Serial.println(myPattern[frame]);
+switch (currentPattern){
+  case 0:
+      strip.setPixelColor(i+offset,replaceColor(pattern1[frame][i]));
+      break;
+  case 1:
+      strip.setPixelColor(i+offset,replaceColor(pattern2[frame][i]));
+      break;
+  case 2:
+      strip.setPixelColor(i+offset,replaceColor(pattern3[frame][i]));
+      break;
+  case 3:
+      strip.setPixelColor(i+offset,replaceColor(pattern4[frame][i]));
+      break;
+  case 4:
+      strip.setPixelColor(i+offset,replaceColor(pattern5[frame][i]));
+      break;
+  case 5:
+      strip.setPixelColor(i+offset,replaceColor(pattern6[frame][i]));
+      break;
+  case 6:
+      strip.setPixelColor(i+offset,replaceColor(pattern7[frame][i]));
+      break;
+  case 7:
+      strip.setPixelColor(i+offset,replaceColor(pattern8[frame][i]));
+      break;
+  case 8:
+      strip.setPixelColor(i+offset,replaceColor(pattern9[frame][i]));
+      break;
+}
     }
   }
   strip.show(); // push out to strip
