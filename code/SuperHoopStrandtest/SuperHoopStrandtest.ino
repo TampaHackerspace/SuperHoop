@@ -214,8 +214,8 @@ void setup() {
   digitalWrite(13,LOW);
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
-  Serial.begin(9600);
-  Serial.println("Setup TEST\r\n");
+  //Serial.begin(9600);
+  //Serial.println("Setup TEST\r\n");
 }
 
 
@@ -224,7 +224,7 @@ void loop() {
   // Some example procedures showing how to display to the pixels:
   //currentmillis=millis();
   render_frame(frame);
-  Serial.println("LOOP TEST\r\n");
+  //Serial.println("LOOP TEST\r\n");
   frame++;
   frame = frame%PATTERN_REPEAT;
   delay(DELAY);
@@ -234,7 +234,7 @@ void loop() {
     counter=0;
     currentPattern++;
     currentPattern = currentPattern%NUM_PATTERNS;
-    Serial.println("Changing patterns");
+    //Serial.println("Changing patterns");
   }
 }
 
