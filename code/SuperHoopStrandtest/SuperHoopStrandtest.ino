@@ -210,8 +210,15 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(90, PIN, NEO_GRB + NEO_KHZ800);
 int frame = 0;
 int currentPattern = 0;
 int counter=0;
+
+int potPin = 0;
+int sensorPin = 1;
+
+
 void setup() {
   digitalWrite(13,LOW);
+  pinMode(potPin, INPUT);
+  pinMode(sensorPin, INPUT);
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
   //Serial.begin(9600);
@@ -221,6 +228,24 @@ void setup() {
 
 
 void loop() {
+
+  int gsr = analogRead(sensorPin);
+  int pot = analogRead(potPin);
+  if (gsr - pot > 650 )
+  {
+    showRegularPatterns();
+  }
+  else if (gsr - pot < 500)
+  {
+    setColor(red);
+  }
+  else
+  {
+    setColor(green);
+  }
+}
+
+void showRegularPatterns(){
   // Some example procedures showing how to display to the pixels:
   //currentmillis=millis();
   render_frame(frame);
