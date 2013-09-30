@@ -237,11 +237,11 @@ void loop() {
   }
   else if (gsr - pot < 500)
   {
-    setColor(red);
+    //setColor(red);
   }
   else
   {
-    setColor(green);
+    //setColor(green);
   }
 }
 
