@@ -254,7 +254,7 @@ void showRegularPatterns(){
   frame = frame%PATTERN_REPEAT;
   delay(DELAY);
   counter++;
-  if(counter>1000)
+  if(counter>250)
   {
     counter=0;
     currentPattern++;
