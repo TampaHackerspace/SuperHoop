@@ -213,7 +213,7 @@ int counter=0;
 
 int potPin = 0;
 int sensorPin = 1;
-
+int calibrate;
 
 void setup() {
   digitalWrite(13,LOW);
@@ -222,7 +222,10 @@ void setup() {
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
   //Serial.begin(9600);
-  //Serial.println("Setup TEST\r\n");
+  //Serial.println("Setup TEST");
+  calibrate = 1;
+  
+  
 }
 
 
@@ -231,17 +234,44 @@ void loop() {
 
   int gsr = analogRead(sensorPin);
   int pot = analogRead(potPin);
+
   if (gsr - pot > 650 )
   {
-    showRegularPatterns();
-  }
-  else if (gsr - pot < 500)
-  {
-    setColor(red);
+    showRegularPatterns(); 
+    calibrate = 1;
   }
   else
   {
-    setColor(green);
+    //someone has grabbed the hoop to lie detect!  calibrate it!
+    
+    //make the lights do something
+    if (calibrate == 1)
+    {
+      colorWipe(strip.Color(0, 0, 255), 50); // Blue
+      calibrate++;
+    }
+    
+    //measure the average resistances on the inputs
+    int gsrTotal;
+    int potTotal;
+    
+    for(int i = 0; i < 20; i++)
+    {
+      gsrTotal += analogRead(sensorPin);
+      potTotal += analogRead(potPin);
+    }
+    int gsrAvg = gsrTotal / 20;
+    int potAvg = potTotal / 20;
+    
+    //lets figure out the thresholds of when they are lying and telling the truth
+    if ((gsrAvg - (gsrAvg / 35)) < analogRead(sensorPin))
+    {
+      colorWipe(strip.Color(255,0,0),50); // red
+    }
+    else
+    {
+      colorWipe(strip.Color(0, 255, 0), 50); // green
+    }
   }
 }
 
@@ -254,7 +284,7 @@ void showRegularPatterns(){
   frame = frame%PATTERN_REPEAT;
   delay(DELAY);
   counter++;
-  if(counter>250)
+  if(counter>1000)
   {
     counter=0;
     currentPattern++;
@@ -358,6 +388,14 @@ unsigned long replaceColor(byte color)//extend 2 bits to 24 and shift bits for b
   return strip.Color(redcolor,  grncolor,  blucolor);//combine individual 8 bit RGB values to a long
 }
 
+// Fill the dots one after the other with a color
+void colorWipe(uint32_t c, uint8_t wait) {
+  for(uint16_t i=0; i<strip.numPixels(); i++) {
+      strip.setPixelColor(i, c);
+      strip.show();
+      delay(wait);
+  }
+}
 
 
 
