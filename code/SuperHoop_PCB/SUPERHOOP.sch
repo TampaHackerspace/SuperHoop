@@ -13834,7 +13834,7 @@ Source: 008-0260-0_E.pdf</description>
 <part name="CON2" library="daneagle_db" deviceset="HEADER_2X1" device="_2.54" value="TOUCH_INPUT"/>
 <part name="CON5" library="daneagle_db" deviceset="ISP-AVR" device="_6P"/>
 <part name="X1" library="crystal" deviceset="CRYSTAL" device="HC49S"/>
-<part name="R1" library="rcl" deviceset="R-US_" device="0204/2V" value="10k"/>
+<part name="R1" library="rcl" deviceset="R-US_" device="0207/12" value="10k"/>
 </parts>
 <sheets>
 <sheet>
@@ -13849,7 +13849,7 @@ Source: 008-0260-0_E.pdf</description>
 <text x="233.68" y="109.22" size="1.778" layer="91">YOUT</text>
 <text x="233.68" y="106.68" size="1.778" layer="91">XOUT</text>
 <text x="233.68" y="116.84" size="1.778" layer="91">3VO</text>
-<text x="147.32" y="137.16" size="1.778" layer="91">D6</text>
+<text x="147.32" y="134.62" size="1.778" layer="91">D6</text>
 <text x="177.8" y="30.48" size="1.778" layer="91">SUPERHOOP_MAIN_PCB REV --</text>
 </plain>
 <instances>
@@ -13866,7 +13866,7 @@ Source: 008-0260-0_E.pdf</description>
 <instance part="CON2" gate="G$1" x="162.56" y="187.96"/>
 <instance part="CON5" gate="G$1" x="154.94" y="76.2"/>
 <instance part="X1" gate="G$1" x="66.04" y="152.4" rot="R90"/>
-<instance part="R1" gate="G$1" x="78.74" y="177.8" rot="R90"/>
+<instance part="R1" gate="G$1" x="81.28" y="177.8" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -13912,7 +13912,7 @@ Source: 008-0260-0_E.pdf</description>
 </segment>
 <segment>
 <pinref part="R1" gate="G$1" pin="2"/>
-<wire x1="73.66" y1="182.88" x2="78.74" y2="182.88" width="0.1524" layer="91"/>
+<wire x1="73.66" y1="182.88" x2="81.28" y2="182.88" width="0.1524" layer="91"/>
 <label x="73.66" y="182.88" size="1.778" layer="95"/>
 </segment>
 </net>
@@ -13971,9 +13971,9 @@ Source: 008-0260-0_E.pdf</description>
 <label x="210.82" y="152.4" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="144.78" y1="137.16" x2="134.62" y2="137.16" width="0.1524" layer="91"/>
-<label x="139.7" y="137.16" size="1.778" layer="95"/>
-<pinref part="IC1" gate="G$1" pin="PD5(T1)"/>
+<label x="139.7" y="134.62" size="1.778" layer="95"/>
+<pinref part="IC1" gate="G$1" pin="PD6(AIN0)"/>
+<wire x1="144.78" y1="134.62" x2="134.62" y2="134.62" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="XTAL1" class="0">
@@ -14092,12 +14092,6 @@ Source: 008-0260-0_E.pdf</description>
 <wire x1="134.62" y1="73.66" x2="142.24" y2="73.66" width="0.1524" layer="91"/>
 <label x="134.62" y="73.66" size="1.778" layer="95"/>
 </segment>
-<segment>
-<pinref part="IC1" gate="G$1" pin="PC6(/RESET)"/>
-<wire x1="78.74" y1="172.72" x2="86.36" y2="172.72" width="0.1524" layer="91"/>
-<label x="78.74" y="172.72" size="1.778" layer="95"/>
-<pinref part="R1" gate="G$1" pin="1"/>
-</segment>
 </net>
 <net name="MOSI" class="0">
 <segment>
@@ -14109,6 +14103,13 @@ Source: 008-0260-0_E.pdf</description>
 <pinref part="IC1" gate="G$1" pin="PB3(MOSI/OC2)"/>
 <wire x1="144.78" y1="119.38" x2="134.62" y2="119.38" width="0.1524" layer="91"/>
 <label x="139.7" y="119.38" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$1" class="0">
+<segment>
+<pinref part="R1" gate="G$1" pin="1"/>
+<pinref part="IC1" gate="G$1" pin="PC6(/RESET)"/>
+<wire x1="81.28" y1="172.72" x2="86.36" y2="172.72" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
